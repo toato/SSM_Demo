@@ -1,0 +1,8 @@
+com\toato\ssm\dao\IProductDao.class
+com\toato\ssm\dao\IOrdersDao.class
+com\toato\ssm\dao\IMemberDao.class
+com\toato\ssm\dao\ISysLogDao.class
+com\toato\ssm\dao\IRoleDao.class
+com\toato\ssm\dao\IUserDao.class
+com\toato\ssm\dao\IPermissionDao.class
+com\toato\ssm\dao\ITravellerDao.class

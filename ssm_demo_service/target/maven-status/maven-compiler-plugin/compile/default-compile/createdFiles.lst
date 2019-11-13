@@ -1,0 +1,12 @@
+com\toato\ssm\service\impl\SysLogServiceImpl.class
+com\toato\ssm\service\IProductService.class
+com\toato\ssm\service\IUserService.class
+com\toato\ssm\service\impl\OrdersServiceImpl.class
+com\toato\ssm\service\IRoleService.class
+com\toato\ssm\service\impl\ProductServiceImpl.class
+com\toato\ssm\service\impl\UserServiceImpl.class
+com\toato\ssm\service\IOrdersService.class
+com\toato\ssm\service\impl\PermissionService.class
+com\toato\ssm\service\impl\RoleService.class
+com\toato\ssm\service\IPermissionService.class
+com\toato\ssm\service\ISysLogService.class

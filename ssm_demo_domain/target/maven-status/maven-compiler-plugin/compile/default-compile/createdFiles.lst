@@ -1,0 +1,8 @@
+com\toato\ssm\domain\Permission.class
+com\toato\ssm\domain\Role.class
+com\toato\ssm\domain\Traveller.class
+com\toato\ssm\domain\SysLog.class
+com\toato\ssm\domain\Orders.class
+com\toato\ssm\domain\Product.class
+com\toato\ssm\domain\UserInfo.class
+com\toato\ssm\domain\Member.class

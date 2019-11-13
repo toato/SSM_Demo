@@ -1,0 +1,7 @@
+com\toato\ssm\controller\PermissionController.class
+com\toato\ssm\controller\ProductController.class
+com\toato\ssm\controller\UserController.class
+com\toato\ssm\controller\SysLogController.class
+com\toato\ssm\controller\OrdersController.class
+com\toato\ssm\controller\RoleController.class
+com\toato\ssm\controller\LogAop.class
