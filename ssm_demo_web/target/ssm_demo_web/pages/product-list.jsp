@@ -214,7 +214,7 @@
                             </thead>
                             <tbody>
 
-                            <c:forEach items="${productList}" var="product">
+                            <c:forEach items="${pageInfo.list}" var="product">
                             <tr>
                                 <td><input value="${product.id}" name="ids" type="checkbox"></td>
                                 <td>${product.id}</td>

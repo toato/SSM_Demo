@@ -210,7 +210,7 @@
                             </thead>
                             <tbody>
 
-                            <c:forEach items="${userList}" var="user">
+                            <c:forEach items="${pageInfo.list}" var="user">
                             <tr>
                                 <td><input name="ids" type="checkbox"></td>
                                 <td>${user.id}</td>

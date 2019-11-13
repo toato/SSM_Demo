@@ -5,6 +5,7 @@ import com.toato.ssm.service.IPermissionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
@@ -27,8 +28,9 @@ public class PermissionController {
      * @throws Exception
      */
     @RequestMapping("/findAll")
-    public ModelAndView findAll() throws Exception {
-        List<Permission> permissionList = permissionService.findAll();
+    public ModelAndView findAll(@RequestParam(name="page", defaultValue = "1") Integer page,
+                                @RequestParam(name = "size", defaultValue = "4") Integer size) throws Exception {
+        List<Permission> permissionList = permissionService.findAll(page, size);
         ModelAndView mv = new ModelAndView();
 
         mv.addObject("permissionList", permissionList);

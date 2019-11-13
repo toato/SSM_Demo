@@ -6,6 +6,7 @@ import com.toato.ssm.service.IRoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
@@ -28,9 +29,10 @@ public class RoleController {
      * @throws Exception
      */
     @RequestMapping("/findAll.do")
-    public ModelAndView findAll() throws Exception {
+    public ModelAndView findAll(@RequestParam(name="page", defaultValue = "1") Integer page,
+                                @RequestParam(name = "size", defaultValue = "4") Integer size) throws Exception {
 
-        List<Role> roleList = roleService.findAll();
+        List<Role> roleList = roleService.findAll(page, size);
 
         ModelAndView mv = new ModelAndView();
         mv.addObject("roleList", roleList);

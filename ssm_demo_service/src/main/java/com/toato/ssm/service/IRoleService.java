@@ -11,7 +11,7 @@ import java.util.List;
  */
 public interface IRoleService {
 
-    List<Role> findAll() throws Exception;
+    List<Role> findAll(Integer page, Integer size) throws Exception;
 
     void save(Role role) throws Exception;
 
