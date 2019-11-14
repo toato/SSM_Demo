@@ -1,7 +1,9 @@
 package com.toato.ssm.controller;
 
+import com.github.pagehelper.PageInfo;
 import com.toato.ssm.domain.Permission;
 import com.toato.ssm.service.IPermissionService;
+import com.toato.ssm.utls.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,12 +30,12 @@ public class PermissionController {
      * @throws Exception
      */
     @RequestMapping("/findAll")
-    public ModelAndView findAll(@RequestParam(name="page", defaultValue = "1") Integer page,
-                                @RequestParam(name = "size", defaultValue = "4") Integer size) throws Exception {
+    public ModelAndView findAll(@RequestParam(name="page", defaultValue = Constants.DEFAULT_STARTPAGE) Integer page,
+                                @RequestParam(name = "size", defaultValue = Constants.DEFAULT_PAGESIZE) Integer size) throws Exception {
         List<Permission> permissionList = permissionService.findAll(page, size);
         ModelAndView mv = new ModelAndView();
-
-        mv.addObject("permissionList", permissionList);
+        PageInfo pageInfo = new PageInfo(permissionList);
+        mv.addObject("pageInfo", pageInfo);
         mv.setViewName("permission-list");
         return mv;
     }

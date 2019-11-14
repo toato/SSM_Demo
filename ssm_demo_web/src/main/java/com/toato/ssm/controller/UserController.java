@@ -4,10 +4,12 @@ import com.github.pagehelper.PageInfo;
 import com.toato.ssm.domain.Role;
 import com.toato.ssm.domain.UserInfo;
 import com.toato.ssm.service.IUserService;
+import com.toato.ssm.utls.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
@@ -33,9 +35,8 @@ public class UserController {
      * @throws Exception
      */
     @RequestMapping("/findAll.do")
-    public ModelAndView findAll(@RequestParam(name="page", defaultValue = "1") Integer page,
-                                @RequestParam(name = "size", defaultValue = "4") Integer size) throws Exception {
-
+    public ModelAndView findAll(@RequestParam(name="page", defaultValue = Constants.DEFAULT_STARTPAGE) Integer page,
+                                @RequestParam(name = "size", defaultValue = Constants.DEFAULT_PAGESIZE) Integer size) throws Exception {
         List<UserInfo> userList = userService.findAll(page, size);
 
         ModelAndView mv = new ModelAndView();
@@ -53,9 +54,55 @@ public class UserController {
      * @return
      */
     @RequestMapping("/save.do")
-    public String save(UserInfo userInfo) {
+    public String save(UserInfo userInfo) throws Exception {
         userService.save(userInfo);
         return "redirect:findAll.do";
+    }
+
+
+    /**
+     * 批量删除用户
+     * @param ids
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("delete.do")
+    public String del(@RequestParam(value = "ids[]") List<Integer> ids) throws Exception {
+        for(Integer id : ids) {
+            System.out.println(id);
+            userService.delete(id);
+        }
+        return "{\"code\": \"0\"}";
+    }
+
+
+    /**
+     * 开启用户
+     * @param ids
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("enable.do")
+    public String productEnable(@RequestParam(value = "ids[]") List<Integer> ids) throws Exception {
+        for(Integer id : ids) {
+            userService.enable(id);
+        }
+        return "{\"code\": \"0\"}";
+    }
+
+
+    /**
+     * 停用用户
+     * @param ids
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("disable.do")
+    public String productDisable(@RequestParam(value = "ids[]") List<Integer> ids) throws Exception {
+        for(Integer id : ids) {
+            userService.disable(id);
+        }
+        return "{\"code\": \"0\"}";
     }
 
 
@@ -100,8 +147,8 @@ public class UserController {
 
     /**
      * 为用户添加角色
-     * @param userId
-     * @param roleIds
+     * @param userId    用户id
+     * @param roleIds   角色id
      * @return
      * @throws Exception
      */

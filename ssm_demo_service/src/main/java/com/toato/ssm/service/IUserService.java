@@ -13,11 +13,17 @@ public interface IUserService {
 
     public List<UserInfo> findAll(Integer page, Integer size) throws Exception;
 
-    void save(UserInfo userInfo);
+    void save(UserInfo userInfo) throws Exception;
 
-    UserInfo findById(String id);
+    UserInfo findById(String id) throws Exception;
 
     List<Role> findOtherRoles(String userId) throws Exception;
 
     void addRoleToUser(String userId, String[] roleIds) throws Exception;
+
+    void enable(Integer id) throws Exception;
+
+    void disable(Integer id) throws Exception;
+
+    void delete(Integer id) throws Exception;
 }

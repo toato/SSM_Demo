@@ -421,7 +421,7 @@
                 $.post("${pageContext.request.contextPath}/product/delete.do", {
                     "ids" : selectArr
                 }, function (data) {
-                    if(json.parse(data).code === "0") {
+                    if(JSON.parse(data).code === "0") {
                         refresh();
                     }
                 });
@@ -439,7 +439,7 @@
                 $.post("${pageContext.request.contextPath}/product/enable.do", {
                     "ids" : selectArr
                 }, function (data) {
-                    if(json.parse(data).code === "0") {
+                    if(JSON.parse(data).code === "0") {
                         refresh();
                     }
                 });
@@ -457,7 +457,7 @@
                 $.post("${pageContext.request.contextPath}/product/disable.do", {
                     "ids" : selectArr
                 }, function (data) {
-                    if(json.parse(data).code === "0") {
+                    if(JSON.parse(data).code === "0") {
                         refresh();
                     }
                 });

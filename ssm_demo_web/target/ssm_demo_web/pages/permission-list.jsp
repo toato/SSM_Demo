@@ -178,27 +178,25 @@
 					<div class="box-footer">
 						<div class="pull-left">
 							<div class="form-group form-inline">
-								总共2 页，共14 条数据。 每页 <select class="form-control">
-									<option>1</option>
-									<option>2</option>
-									<option>3</option>
-									<option>4</option>
+								总共${pageInfo.pages} 页，共${pageInfo.total} 条数据。 每页
+								<select class="form-control" id="changePageSize" onchange="changePageSize()">
 									<option>5</option>
+									<option>10</option>
+									<option>15</option>
+									<option>20</option>
 								</select> 条
 							</div>
 						</div>
 
 						<div class="box-tools pull-right">
 							<ul class="pagination">
-								<li><a href="#" aria-label="Previous">首页</a></li>
-								<li><a href="#">上一页</a></li>
-								<li><a href="#">1</a></li>
-								<li><a href="#">2</a></li>
-								<li><a href="#">3</a></li>
-								<li><a href="#">4</a></li>
-								<li><a href="#">5</a></li>
-								<li><a href="#">下一页</a></li>
-								<li><a href="#" aria-label="Next">尾页</a></li>
+								<li><a href="${pageContext.request.contextPath}/permission/findAll.do?page=1&size=${pageInfo.pageSize}" aria-label="Previous">首页</a></li>
+								<li><a href="${pageContext.request.contextPath}/permission/findAll.do?page=${pageInfo.pageNum-1}&size=${pageInfo.pageSize}">上一页</a></li>
+								<c:forEach begin="1" end="${pageInfo.pages}" var="pageNum">
+									<li><a href="${pageContext.request.contextPath}/permission/findAll.do?page=${pageNum}&size=${pageInfo.pageSize}">${pageNum}</a></li>
+								</c:forEach>
+								<li><a href="${pageContext.request.contextPath}/permission/findAll.do?page=${pageInfo.pageNum+1}&size=${pageInfo.pageSize}">下一页</a></li>
+								<li><a href="${pageContext.request.contextPath}/permission/findAll.do?page=${pageInfo.pages}&size=${pageInfo.pageSize}" aria-label="Next">尾页</a></li>
 							</ul>
 						</div>
 
@@ -274,61 +272,59 @@
 		<script src="../plugins/flot/jquery.flot.categories.min.js"></script>
 		<script src="../plugins/ionslider/ion.rangeSlider.min.js"></script>
 		<script src="../plugins/bootstrap-slider/bootstrap-slider.js"></script>
-		<script>
-			$(document).ready(function() {
-				// 选择框
-				$(".select2").select2();
 
-				// WYSIHTML5编辑器
-				$(".textarea").wysihtml5({
-					locale : 'zh-CN'
-				});
+	<script>
+		function changePageSize() {
+
+			var pageSize = $('#changePageSize').val();
+
+			location.href = "${pageContext.request.contextPath}/orders/findAll.do?page=1&size=" + pageSize;
+
+		}
+
+		$(document).ready(function() {
+			// 选择框
+			$(".select2").select2();
+
+			// WYSIHTML5编辑器
+			$(".textarea").wysihtml5({
+				locale : 'zh-CN'
 			});
+		});
 
-			// 设置激活菜单
-			function setSidebarActive(tagUri) {
-				var liObj = $("#" + tagUri);
-				if (liObj.length > 0) {
-					liObj.parent().parent().addClass("active");
-					liObj.addClass("active");
-				}
+		// 设置激活菜单
+		function setSidebarActive(tagUri) {
+			var liObj = $("#" + tagUri);
+			if (liObj.length > 0) {
+				liObj.parent().parent().addClass("active");
+				liObj.addClass("active");
 			}
+		}
 
-			$(document)
-					.ready(
-							function() {
+		$(document).ready(function() {
 
-								// 激活导航位置
-								setSidebarActive("admin-datalist");
+			// 激活导航位置
+			setSidebarActive("admin-datalist");
 
-								// 列表按钮 
-								$("#dataList td input[type='checkbox']")
-										.iCheck(
-												{
-													checkboxClass : 'icheckbox_square-blue',
-													increaseArea : '20%'
-												});
-								// 全选操作 
-								$("#selall")
-										.click(
-												function() {
-													var clicks = $(this).is(
-															':checked');
-													if (!clicks) {
-														$(
-																"#dataList td input[type='checkbox']")
-																.iCheck(
-																		"uncheck");
-													} else {
-														$(
-																"#dataList td input[type='checkbox']")
-																.iCheck("check");
-													}
-													$(this).data("clicks",
-															!clicks);
-												});
-							});
-		</script>
+			// 列表按钮
+			$("#dataList td input[type='checkbox']").iCheck({
+				checkboxClass : 'icheckbox_square-blue',
+				increaseArea : '20%'
+			});
+			// 全选操作
+			$("#selall").click(function() {
+				var clicks = $(this).is(':checked');
+				if (!clicks) {
+					$("#dataList td input[type='checkbox']").iCheck("uncheck");
+				} else {
+					$("#dataList td input[type='checkbox']").iCheck("check");
+				}
+				$(this).data("clicks",
+				!clicks);
+			});
+		});
+	</script>
+
 </body>
 
 </html>

@@ -6,6 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false" %>
+<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 <html>
 <head>
     <title>Title</title>
@@ -53,13 +54,14 @@
                     </span>
                 </a>
                 <ul class="treeview-menu">
-
+                    <security:authorize access="hasRole('ADMIN')">
+                    <%-- 只有admin才能看到 --%>
                     <li id="admin-login">
                         <a href="${pageContext.request.contextPath}/user/findAll.do">
                             <i class="fa fa-circle-o"></i> 用户管理
                         </a>
                     </li>
-
+                    </security:authorize>
                     <li id="admin-register">
                         <a href="${pageContext.request.contextPath}/role/findAll.do">
                             <i class="fa fa-circle-o"></i> 角色管理

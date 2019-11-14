@@ -13,4 +13,10 @@ public interface IOrdersService {
     public List<Orders> findAll(int page, int size) throws Exception;
 
     Orders findById(String id) throws Exception;
+
+    void disable(Integer id) throws Exception;
+
+    void enable(Integer id) throws Exception;
+
+    void delete(Integer id) throws Exception;
 }

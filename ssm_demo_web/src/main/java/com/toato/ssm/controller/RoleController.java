@@ -3,12 +3,15 @@ package com.toato.ssm.controller;
 import com.toato.ssm.domain.Permission;
 import com.toato.ssm.domain.Role;
 import com.toato.ssm.service.IRoleService;
+import com.toato.ssm.utls.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.annotation.security.RolesAllowed;
 import java.util.List;
 
 /**
@@ -29,9 +32,9 @@ public class RoleController {
      * @throws Exception
      */
     @RequestMapping("/findAll.do")
-    public ModelAndView findAll(@RequestParam(name="page", defaultValue = "1") Integer page,
-                                @RequestParam(name = "size", defaultValue = "4") Integer size) throws Exception {
-
+    @RolesAllowed("ADMIN")              // 只有anmin才能访问该方法
+    public ModelAndView findAll(@RequestParam(name="page", defaultValue = Constants.DEFAULT_STARTPAGE) Integer page,
+                                @RequestParam(name = "size", defaultValue = Constants.DEFAULT_PAGESIZE) Integer size) throws Exception {
         List<Role> roleList = roleService.findAll(page, size);
 
         ModelAndView mv = new ModelAndView();
@@ -53,6 +56,7 @@ public class RoleController {
 
         return "redirect:findAll.do";
     }
+
 
 
     /**

@@ -3,6 +3,7 @@ package com.toato.ssm.controller;
 import com.github.pagehelper.PageInfo;
 import com.toato.ssm.domain.Product;
 import com.toato.ssm.service.IProductService;
+import com.toato.ssm.utls.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.annotation.security.RolesAllowed;
 import java.util.HashMap;
 import java.util.List;
 
@@ -32,8 +34,9 @@ public class ProductController {
      * @return
      */
     @RequestMapping("findAll.do")
-    public ModelAndView findAll(@RequestParam(name="page", defaultValue = "1") Integer page,
-                                @RequestParam(name = "size", defaultValue = "4") Integer size) {
+    @RolesAllowed({"ADMIN"})                  // 当前方法只能由有ADMIN权限的用户访问
+    public ModelAndView findAll(@RequestParam(name="page", defaultValue = Constants.DEFAULT_STARTPAGE) Integer page,
+                                @RequestParam(name = "size", defaultValue = Constants.DEFAULT_PAGESIZE) Integer size) throws Exception {
 
         List<Product> list = productService.findAll(page, size);
 
@@ -81,7 +84,7 @@ public class ProductController {
             System.out.println(id);
             productService.delete(id);
         }
-        return "{\"code\", \"0\"}";
+        return "{\"code\": \"0\"}";
     }
 
 
@@ -96,7 +99,7 @@ public class ProductController {
         for(Integer id : ids) {
             productService.enable(id);
         }
-        return "{\"code\", \"0\"}";
+        return "{\"code\": \"0\"}";
     }
 
 
@@ -111,7 +114,7 @@ public class ProductController {
         for(Integer id : ids) {
             productService.disable(id);
         }
-        return "{\"code\", \"0\"}";
+        return "{\"code\": \"0\"}";
     }
 
 

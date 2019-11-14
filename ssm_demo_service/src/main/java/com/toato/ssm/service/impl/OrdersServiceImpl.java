@@ -32,4 +32,19 @@ public class OrdersServiceImpl implements IOrdersService {
     public Orders findById(String id) throws Exception {
         return ordersDao.findById(id);
     }
+
+    @Override
+    public void disable(Integer id) throws Exception {
+        ordersDao.disable(id);
+    }
+
+    @Override
+    public void enable(Integer id) throws Exception {
+        ordersDao.enable(id);
+    }
+
+    @Override
+    public void delete(Integer id) throws Exception {
+        ordersDao.delete(id);
+    }
 }

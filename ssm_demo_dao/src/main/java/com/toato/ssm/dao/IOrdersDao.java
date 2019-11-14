@@ -44,4 +44,14 @@ public interface IOrdersDao {
             @Result(property = "travellers", column = "id", javaType = java.util.List.class, many = @Many(select = "com.toato.ssm.dao.ITravellerDao.findByOrdersId"))
     })
     Orders findById(String id) throws Exception;
+
+
+    @Update("update orders set orderStatus = 1 where id = #{id}")
+    void enable(Integer id) throws Exception;
+
+    @Update("update orders set orderStatus = 0 where id = #{id}")
+    void disable(Integer id) throws Exception;
+
+    @Update("delete from orders where id = #{id}")
+    void delete(Integer id) throws Exception;
 }

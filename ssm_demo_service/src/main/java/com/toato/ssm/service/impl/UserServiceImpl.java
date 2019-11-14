@@ -43,7 +43,7 @@ public class UserServiceImpl implements IUserService, UserDetailsService {
      * @throws Exception
      */
     @Override
-    public List<UserInfo> findAll(Integer page, Integer size) {
+    public List<UserInfo> findAll(Integer page, Integer size) throws Exception {
         PageHelper.startPage(page, size);
         return userDao.findAll();
     }
@@ -53,12 +53,12 @@ public class UserServiceImpl implements IUserService, UserDetailsService {
      * @param userInfo
      */
     @Override
-    public void save(UserInfo userInfo) {
+    public void save(UserInfo userInfo) throws Exception {
         userDao.save(userInfo);
     }
 
     @Override
-    public UserInfo findById(String id) {
+    public UserInfo findById(String id) throws Exception {
         return userDao.findById(id);
     }
 
@@ -74,7 +74,20 @@ public class UserServiceImpl implements IUserService, UserDetailsService {
         }
     }
 
+    @Override
+    public void enable(Integer id) throws Exception {
+        userDao.enable(id);
+    }
 
+    @Override
+    public void disable(Integer id) throws Exception {
+        userDao.disable(id);
+    }
+
+    @Override
+    public void delete(Integer id) throws Exception {
+        userDao.delete(id);
+    }
 
 
     @Override
@@ -84,7 +97,12 @@ public class UserServiceImpl implements IUserService, UserDetailsService {
         // System.out.println(username);
 
         // 根据用户名获取用户
-        UserInfo userInfo = userDao.findByUsername(username);
+        UserInfo userInfo = null;
+        try {
+            userInfo = userDao.findByUsername(username);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         // System.out.println(userInfo);
         if(userInfo != null) {
             user = new User(userInfo.getUsername(), "{noop}" + userInfo.getPassword(), userInfo.getStatus() == 0 ? false : true, true, true, true, getAuthority(userInfo.getRoles()));
@@ -97,6 +115,7 @@ public class UserServiceImpl implements IUserService, UserDetailsService {
     public List<SimpleGrantedAuthority> getAuthority(List<Role> roles) {
         List<SimpleGrantedAuthority> list = new ArrayList<>();
         for (Role role : roles) {
+            System.out.println(role.getRoleName());
             list.add(new SimpleGrantedAuthority("ROLE_" + role.getRoleName()));
         }
         return list;

@@ -178,10 +178,10 @@
                             <div class="form-group form-inline">
                                 <div class="btn-group">
                                     <button type="button" class="btn btn-default" title="新建" onclick="location.href='${pageContext.request.contextPath}/pages/user-add.jsp'"><i class="fa fa-file-o"></i> 新建</button>
-                                    <button type="button" class="btn btn-default" title="删除"><i class="fa fa-trash-o"></i> 删除</button>
-                                    <button type="button" class="btn btn-default" title="开启"><i class="fa fa-check"></i> 开启</button>
-                                    <button type="button" class="btn btn-default" title="屏蔽"><i class="fa fa-ban"></i> 屏蔽</button>
-                                    <button type="button" class="btn btn-default" title="刷新"><i class="fa fa-refresh"></i> 刷新</button>
+                                    <button type="button" class="btn btn-default delBtn" title="删除"><i class="fa fa-trash-o"></i> 删除</button>
+                                    <button type="button" class="btn btn-default enableBtn" title="开启"><i class="fa fa-check"></i> 开启</button>
+                                    <button type="button" class="btn btn-default disableBtn" title="屏蔽"><i class="fa fa-ban"></i> 屏蔽</button>
+                                    <button type="button" class="btn btn-default reflashBtn" onclick="refresh()" title="刷新"><i class="fa fa-refresh"></i> 刷新</button>
                                 </div>
                             </div>
                         </div>
@@ -212,7 +212,7 @@
 
                             <c:forEach items="${pageInfo.list}" var="user">
                             <tr>
-                                <td><input name="ids" type="checkbox"></td>
+                                <td><input name="ids" type="checkbox" value="${user.id}"></td>
                                 <td>${user.id}</td>
                                 <td>${user.username}</td>
                                 <td>${user.email}</td>
@@ -405,6 +405,69 @@
             $(this).data("clicks", !clicks);
         });
     });
+</script>
+<script>
+    function refresh() {
+        location.reload();
+    }
+
+
+    $(function () {
+        // 批量删除
+        $('.delBtn').on('click', function (e) {
+            var selectArr = [];
+            $("#dataList td input:checked").each(function(i){
+                selectArr.push($(this).attr("value"));
+            });
+            if(selectArr.length >= 1) {
+                $.post("${pageContext.request.contextPath}/user/delete.do", {
+                    "ids" : selectArr
+                }, function (data) {
+                    if(JSON.parse(data).code === "0") {
+                        refresh();
+                    }
+                });
+            }
+        });
+
+
+        // 批量开启
+        $('.enableBtn').on('click', function (e) {
+            var selectArr = [];
+            $("#dataList td input:checked").each(function(i){
+                selectArr.push($(this).attr("value"));
+            });
+            if(selectArr.length >= 1) {
+                $.post("${pageContext.request.contextPath}/user/enable.do", {
+                    "ids" : selectArr
+                }, function (data) {
+                    if(JSON.parse(data).code === "0") {
+                        refresh();
+                    }
+                });
+            }
+        });
+
+
+        // 批量屏蔽
+        $('.disableBtn').on('click', function (e) {
+            var selectArr = [];
+            $("#dataList td input:checked").each(function(i){
+                selectArr.push($(this).attr("value"));
+            });
+            if(selectArr.length >= 1) {
+                $.post("${pageContext.request.contextPath}/user/disable.do", {
+                    "ids" : selectArr
+                }, function (data) {
+                    if(JSON.parse(data).code === "0") {
+                        refresh();
+                    }
+                });
+            }
+        });
+
+    })
+
 </script>
 </body>
 
